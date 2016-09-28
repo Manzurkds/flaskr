@@ -82,7 +82,7 @@ def add_entry():
 def add_comment():
     db = get_db()
     db.execute('insert into commentonentries(comment_id) values(?)'
-                [request.form[commentid]])
+                [request.form['commentid']])
     db.execute('insert into commentonentries (commenttext) values(?)',
                [request.form['text']])
     db.commit()
