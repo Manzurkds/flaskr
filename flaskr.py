@@ -60,7 +60,7 @@ def close_db(error):
 @app.route('/')
 def show_entries():
     db = get_db()
-    cur = db.execute('select title,time, text from entries order by id desc')
+    cur = db.execute('select id, title,time, text from entries order by id desc')
     entries = cur.fetchall()
     cur = db.execute('select commenttext from commentonentries order by id desc')
     commentonentries = cur.fetchall()
