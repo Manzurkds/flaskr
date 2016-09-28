@@ -81,7 +81,7 @@ def add_entry():
 @app.route('/comment', methods=['POST'])
 def add_comment():
     db = get_db()
-    db.execute('insert into commentonentries(comment_id) values(?)'
+    db.execute('insert into commentonentries(comment_id) values(?)',
                 [request.form['commentid']])
     db.execute('insert into commentonentries (commenttext) values(?)',
                [request.form['text']])
