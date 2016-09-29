@@ -1,6 +1,18 @@
 {% extends "layout.html" %}
+
 {% block body %}
   {% if session.logged_in %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+    $("#hide").click(function(){
+        $("ds").hide();
+    });
+    $("#show").click(function(){
+        $("ds").show();
+    });
+    });
+    </script>
     <form action="{{ url_for('add_entry') }}" method="post" class="add-entry">
       <dl>
         <dt>Title:
@@ -11,24 +23,27 @@
       </dl>
     </form>
   {% endif %}
+  <button id="show">Show Comment Field</button> 
+  <button id="hide">Hide Comment Field</button>
   <ul class="entries">
   {% for entry in entries %}
-    <li><h2>{{ entry.title }}</h2><h2>{{entry.time|safe }}</h2>{{ entry.text|safe }}</li>
-      <form action="{{ url_for('add_comment')}}" method="post" class="add-entry">
-      <dl>
-        <dt>Text:
-        <dd><textarea name="text" rows="2" cols="40"></textarea>
-        <dd><input type="hidden" name="commentid" value = entry.id
-        <dd><input type="submit" value="Add comment" >
-      </dl>
-      </form>
-    <ul class="commentonentries"> 
-    {% for entry in commentonentries %}
-      {% if entry.id == comment_id %}
-      <li><h2>{{ entry.commenttext|safe }}</h2></li>
+    <li><h2 class="hidden">{{ entry.title }}</h2>Published On: {{entry.time|safe }}</li>
+    <li>{{ entry.text|safe }}</li>
+    <li> Comments: </li>
+      {% for comment in commentonentries %}
+      {% if entry.id == comment.comment_id %}
+      <li>{{ comment.commenttext|safe }}</li>
       {% endif %}
     {% endfor %}
-    </ul>
+      <form action="{{ url_for('add_comment')}}" method="post" class="add-entry">
+      <dl>
+        <ds>Add Comment Here:
+        <ds><textarea name="commenttext" rows="1" cols="40"></textarea>
+        <dd><input type="hidden" name="commentid" value = {{entry.id}}>
+        <ds><input type="submit" value="Add comment" > 
+      </dl>
+      </form> 
+    
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em></li>
   {% endfor %}
