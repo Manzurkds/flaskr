@@ -1,51 +1,80 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
 {% extends "layout.html" %}
 
 {% block body %}
+<div class="container-fluid">
   {% if session.logged_in %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
-    $(document).ready(function(){
-    $("#hide").click(function(){
-        $("ds").hide();
-    });
-    $("#show").click(function(){
-        $("ds").show();
-    });
-    });
-    </script>
-    <form action="{{ url_for('add_entry') }}" method="post" class="add-entry">
-      <dl>
-        <dt>Title:
-        <dd><input type="text" size="30" name="title">
-        <dt>Text:
-        <dd><textarea name="text" rows="5" cols="40"></textarea>
-        <dd><input type="submit" value="Share">
-      </dl>
-    </form>
+      $(document).ready(function(){
+        $(".comment-area-toggle").click(function(){
+          $(this).next('.comment-area').toggle();
+        });
+        $(".comment-box-toggle").click(function(){
+          $(this).next(".comment-box").toggle();
+        });
+      });
+    </script> 
+        <form action="{{ url_for('add_entry') }}" method="post" class="add-entry">
+          <dl>
+            <dt>Title:
+            <dd><input style="width:60%; font-weight: bold;" type="text" placeholder="Enter title here" size="30" maxlength="50" name="title" required>
+            <dt>Text:
+            <dd><textarea style="width:80%; font-weight: normal;" name="text" placeholder="Enter text here" rows="5" cols="40"></textarea>
+          </dl>
+          <button class="btn btn-primary" type="submit">Share</button>
+        </form>
   {% endif %}
-  <button id="show">Show Comment Field</button> 
-  <button id="hide">Hide Comment Field</button>
-  <ul class="entries">
-  {% for entry in entries %}
-    <li><h2 class="hidden">{{ entry.title }}</h2>Published On: {{entry.time|safe }}</li>
-    <li>{{ entry.text|safe }}</li>
-    <li> Comments: </li>
-      {% for comment in commentonentries %}
-      {% if entry.id == comment.comment_id %}
-      <li>{{ comment.commenttext|safe }}</li>
-      {% endif %}
-    {% endfor %}
-      <form action="{{ url_for('add_comment')}}" method="post" class="add-entry">
-      <dl>
-        <ds>Add Comment Here:
-        <ds><textarea name="commenttext" rows="1" cols="40"></textarea>
-        <dd><input type="hidden" name="commentid" value = {{entry.id}}>
-        <ds><input type="submit" value="Add comment" > 
-      </dl>
-      </form> 
-    
-  {% else %}
-    <li><em>Unbelievable.  No entries here so far</em></li>
-  {% endfor %}
-  </ul>
+
+      <ul class="entries">
+      {% for entry in entries %}
+        <li><h2><a style="color: rgb(20, 20, 20); font-family: monospace; font-size: 1.4em"href='/post/{{ entry.id }}'>{{entry.title}}</a></h2>Published On: {{entry.time|safe }}</li>
+        <li style="color: rgb(50,50,50);">{{ entry.text|safe }}</li>
+        <div class="row Likes">
+          <li> Likes: {{ entry.likes }} 
+            <a style="cursor: pointer" onclick="$(this).next().closest('form').submit()"><span class="glyphicon glyphicon-thumbs-up"></span></a> 
+            <a style="cursor: pointer" onclick="$(this).closest('form').submit()"><span class="glyphicon glyphicon-thumbs-down"></a>
+          </li>
+          <form action="{{ url_for('likes')}}" method="post">
+            <dl>
+              <dd><input type="hidden" name="entryid" value = {{entry.id}}>
+              <dd><input type="hidden" name="likes" value = {{entry.likes}}>
+            </dl>      
+          </form>
+          <form action="{{ url_for('dislikes')}}" method="post">
+            <dl>
+              <dd><input type="hidden" name="entryid" value = {{entry.id}}>
+              <dd><input type="hidden" name="likes" value = {{entry.likes}}>
+            </dl>  
+          </form>
+        </div>
+        <li class="comment-area-toggle" style="cursor: pointer">Comments:</li>
+          <div class="comment-area">
+            {% for comment in commentonentries %}
+              {% if entry.id == comment.comment_id %}
+                <li style="color: rgb(70, 70, 70)">{{ comment.commenttext|safe }}</li>
+              {% endif %}
+            {% endfor %}
+              <li class="comment-box-toggle" style = "cursor: pointer; color: rgb(70,70,70);" >Add comment:</li>
+              <form class="comment-box" action="{{ url_for('add_comment')}}" method="post">
+                <dl>
+                    <dd><textarea name="commenttext" rows="1" cols="40"></textarea>
+                    <dd><input type="hidden" name="commentid" value = {{entry.id}}>
+                    <dd><button class="btn-xs btn-primary><input type="submit" value="Add" >Add</button> 
+                </dl>
+              </form>
+          </div>
+        
+      {% else %}
+        <li><em>Unbelievable.  No entries here so far</em></li>
+      {% endfor %}
+      </ul>
+</div>
 {% endblock %}

@@ -60,7 +60,7 @@ def close_db(error):
 @app.route('/')
 def show_entries():
     db = get_db()
-    cur = db.execute('select id, title,time, text from entries order by id desc')
+    cur = db.execute('select id, title,time, text, likes from entries order by id desc')
     entries = cur.fetchall()
     cur = db.execute('select comment_id, commenttext from commentonentries order by id desc')
     commentonentries = cur.fetchall()
@@ -86,6 +86,17 @@ def add_comment():
     db.commit()
     flash('New comment was successfully posted')
     return redirect(url_for('show_entries'))
+
+@app.route('/post/<int:entry_id>')
+def redirecttopost(entry_id):
+    db = get_db()
+    cur = db.execute("""select id, title,time, text, likes from entries where id = ?""",
+                        (entry_id))
+    entries = cur.fetchall()
+    cur = db.execute("""select comment_id, commenttext from commentonentries where comment_id = ?""",
+                        (entry_id))
+    commentonentries = cur.fetchall()
+    return render_template('post.html', entries = entries, commentonentries = commentonentries)
 	
 
 
@@ -102,6 +113,34 @@ def login():
             flash('You were logged in')
             return redirect(url_for('show_entries'))
     return render_template('login.html', error=error)
+
+
+@app.route('/', methods=['GET', 'POST']) 
+def likes():
+    entryid = request.form['entryid']
+    db = get_db()
+    likes = request.form['likes']
+    int(likes)
+    likes = int(likes) + 1
+    db.execute("""update entries set likes = ? where id = ?""", 
+                (likes, entryid))  
+    db.commit()
+    flash('Thanks for the like')
+    return redirect(url_for('show_entries'))
+
+@app.route('/', methods=['GET', 'POST']) 
+def dislikes():
+    entryid = request.form['entryid']
+    db = get_db()
+    likes = request.form['likes']
+    int(likes)
+    if int(likes) > 0:
+        likes = int(likes) - 1
+    db.execute("""update entries set likes = ? where id = ?""", 
+                (likes, entryid))  
+    db.commit()
+    flash('Thanks for the dislike')
+    return redirect(url_for('show_entries'))
 
 
 @app.route('/logout')
