@@ -38,7 +38,7 @@
         <li><h2><a style="color: rgb(20, 20, 20); font-family: monospace; font-size: 1.4em" href='/post/{{ entry.id }}'>{{entry.title}}</a></h2>Published On: {{entry.time|safe }}</li>
         <li style="color: rgb(50,50,50);">{{ entry.text|safe }}</li>
         <div class="row Likes">
-          <li> Likes: {{ entry.likes }} 
+          <li style="margin: none !important;"> Likes: {{ entry.likes }} 
             <a style="cursor: pointer" onclick="$(this).closest('form').submit()"><span class="glyphicon glyphicon-thumbs-up"></span></a> 
             <a style="cursor: pointer" onclick="$(this).closest('form').submit()"><span class="glyphicon glyphicon-thumbs-down"></span></a>
           </li>
@@ -57,19 +57,21 @@
         </div>
         <li class="comment-area-toggle" style="cursor: pointer">Comments:</li>
           <div class="comment-area">
+                <form class="comment-box" action="{{ url_for('add_comment')}}" method="post">
+                  <dl>
+                     <li>
+                      <dd><textarea style="width: 80%; vertical-align: bottom;" name="commenttext" placeholder="Add a comment..." rows="1" cols="40"></textarea>
+                      <button id="comment" class="btn-comment" type="submit">Comment</button>
+                     </li>
+                  <dd><input type="hidden" name="commentid" value = {{entry.id}}>
+                  </dl>
+                </form>
             {% for comment in commentonentries %}
               {% if entry.id == comment.comment_id %}
                 <li style="color: rgb(70, 70, 70)">{{ comment.commenttext|safe }}</li>
               {% endif %}
             {% endfor %}
-              <li class="comment-box-toggle" style = "cursor: pointer; color: rgb(70,70,70);" >Add comment:</li>
-              <form class="comment-box" action="{{ url_for('add_comment')}}" method="post">
-                <dl>
-                    <dd><textarea style="width: 60%" name="commenttext" rows="1" cols="40"></textarea>
-                    <dd><input type="hidden" name="commentid" value = {{entry.id}}>
-                    <dd><button class="btn-xs btn-primary><input type="submit" value="Add" >Add</button> 
-                </dl>
-              </form>
+              
           </div>
           <li style="border-bottom: 1px solid #e0e0e0;"></li>
         
