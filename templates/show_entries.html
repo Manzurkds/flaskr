@@ -39,8 +39,8 @@
         <li style="color: rgb(50,50,50);">{{ entry.text|safe }}</li>
         <div class="row Likes">
           <li> Likes: {{ entry.likes }} 
-            <a style="cursor: pointer" onclick="$(this).next().closest('form').submit()"><span class="glyphicon glyphicon-thumbs-up"></span></a> 
-            <a style="cursor: pointer" onclick="$(this).closest('form').submit()"><span class="glyphicon glyphicon-thumbs-down"></a>
+            <a style="cursor: pointer" onclick="$(this).closest('form').submit()"><span class="glyphicon glyphicon-thumbs-up"></span></a> 
+            <a style="cursor: pointer" onclick="$(this).closest('form').submit()"><span class="glyphicon glyphicon-thumbs-down"></span></a>
           </li>
           <form action="{{ url_for('likes')}}" method="post">
             <dl>
@@ -65,7 +65,7 @@
               <li class="comment-box-toggle" style = "cursor: pointer; color: rgb(70,70,70);" >Add comment:</li>
               <form class="comment-box" action="{{ url_for('add_comment')}}" method="post">
                 <dl>
-                    <dd><textarea name="commenttext" rows="1" cols="40"></textarea>
+                    <dd><textarea style="width: 60%" name="commenttext" rows="1" cols="40"></textarea>
                     <dd><input type="hidden" name="commentid" value = {{entry.id}}>
                     <dd><button class="btn-xs btn-primary><input type="submit" value="Add" >Add</button> 
                 </dl>
