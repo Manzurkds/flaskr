@@ -12,13 +12,13 @@ textarea		{ resize: none; }
 .page           { margin: 2em auto; border: 5px solid #ccc;
                   padding: 0.8em; background: white; }
 .page a         { font-family: 'Georgia'; color: maroon; }
-.entries        { list-style: none; margin: 0; padding: 0; }
+.entries        { list-style: none; margin: 0; padding: 0;}
 .entries li     { margin: 0.8em 1.2em; }
 .entries li h2  { margin-left: -1em; }
 .add-entry      { font-size: 0.9em; border-bottom: 1px solid #ccc; }
 .add-entry dl   { font-weight: bold; }
 .Likes	dd      { display: none; }
-.Likes			{ margin: 0.8em 1.2em; margin: 0.8em 1.2em;}
+.Likes			    { margin: 0.8em 1.2em; margin: 0.8em 1.2em;}
 .metanav        { text-align: right; font-size: 0.8em; padding: 0.3em;
                   margin-bottom: 1em; background: rgb(255,240,240); }
 .flash          { background: #CEE5F5; padding: 0.5em;
@@ -44,16 +44,24 @@ textarea		{ resize: none; }
     outline: 0 none;
 }
  
-.btn-primary {
-    background-color: black;
+.btn-share {
+    background-color: maroon;
     color: #ffffff;
 }
  
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
-    background: #33a6cc;
+.btn-share:focus, .btn-share:active, .btn-share.active, .open > .dropdown-toggle.btn-share {
+    background: maroon;
+    background-color: maroon;
+    color: white;
+}
+.btn-share:hover {
+  background-color: rgb(110,0,0);
+  background: rgb(110,0,0);
+  color: white;
 }
  
-.btn-primary:active, .btn-primary.active {
-    background: #007299;
+.btn-share:active, .btn-share.active {
+    background: maroon;
+    background-color: maroon;
     box-shadow: none;
 }
