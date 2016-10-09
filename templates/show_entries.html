@@ -35,7 +35,7 @@
 
       <ul class="entries">
       {% for entry in entries %}
-        <li><h2><a style="color: rgb(20, 20, 20); font-family: monospace; font-size: 1.4em"href='/post/{{ entry.id }}'>{{entry.title}}</a></h2>Published On: {{entry.time|safe }}</li>
+        <li><h2><a style="color: rgb(20, 20, 20); font-family: monospace; font-size: 1.4em" href='/post/{{ entry.id }}'>{{entry.title}}</a></h2>Published On: {{entry.time|safe }}</li>
         <li style="color: rgb(50,50,50);">{{ entry.text|safe }}</li>
         <div class="row Likes">
           <li> Likes: {{ entry.likes }} 

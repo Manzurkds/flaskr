@@ -90,15 +90,12 @@ def add_comment():
 @app.route('/post/<int:entry_id>')
 def redirecttopost(entry_id):
     db = get_db()
-    cur = db.execute("""select id, title,time, text, likes from entries where id = ?""",
-                        (entry_id))
+    cur = db.execute('select id, title,time, text, likes from entries order by id desc')
     entries = cur.fetchall()
-    cur = db.execute("""select comment_id, commenttext from commentonentries where comment_id = ?""",
-                        (entry_id))
+    cur = db.execute('select comment_id, commenttext from commentonentries order by id desc')
     commentonentries = cur.fetchall()
-    return render_template('post.html', entries = entries, commentonentries = commentonentries)
+    return render_template('post.html', entries = entries, commentonentries = commentonentries, entry_id=entry_id)
 	
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
