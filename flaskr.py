@@ -112,31 +112,25 @@ def login():
     return render_template('login.html', error=error)
 
 
-@app.route('/', methods=['GET', 'POST']) 
-def likes():
-    entryid = request.form['entryid']
-    db = get_db()
-    likes = request.form['likes']
-    int(likes)
+@app.route('/likes/<entryid>/<likes>', methods=['GET', 'POST']) 
+def likes(entryid, likes):
     likes = int(likes) + 1
-    db.execute("""update entries set likes = ? where id = ?""", 
-                (likes, entryid))  
+    db = get_db()
+    db.execute("""update entries set likes = ? where id = ?""",
+                (likes, entryid))
     db.commit()
-    flash('Thanks for the like')
+    flash("Thanks for the like")
     return redirect(url_for('show_entries'))
 
-@app.route('/', methods=['GET', 'POST']) 
-def dislikes():
-    entryid = request.form['entryid']
-    db = get_db()
-    likes = request.form['likes']
-    int(likes)
+@app.route('/dislikes/<entryid>/<likes>', methods=['GET', 'POST']) 
+def dislikes(entryid, likes):
     if int(likes) > 0:
         likes = int(likes) - 1
-    db.execute("""update entries set likes = ? where id = ?""", 
-                (likes, entryid))  
+    db = get_db()
+    db.execute("""update entries set likes = ? where id = ?""",
+                (likes, entryid))
     db.commit()
-    flash('Thanks for the dislike')
+    flash("Sorry to see you not liking it")
     return redirect(url_for('show_entries'))
 
 

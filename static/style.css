@@ -23,7 +23,7 @@ textarea		    { resize: none;}
 .error          { background: #F0D6D6; padding: 0.5em; }
 .hidden			    { display: none; }
 .comment-area-toggle 	{}
-.comment-area			{ display: none; background-color: rgb(250,250,250); border: 1px solid #ccc; border-radius: 3px;}
+.comment-area			{ display: none; background-color: rgb(250,250,250); border: 1px solid #ccc; border-radius: 3px; margin-left: 1em; margin-right: 1em;}
 .comment-box-toggle		{}
 .comment-box			{ }
 .comment-box dd			{ margin-left: -1em; margin: 0.8em 1.2em;}
