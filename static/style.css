@@ -11,19 +11,19 @@ textarea		    { resize: none;}
 .page a         { font-family: 'Georgia'; color: maroon; }
 .entries        { list-style: none; margin: 0; padding: 0;}
 .entries li     { margin: 0.8em 1.2em; }
-.entries li h2  { margin-left: -1em; }
+.entries li h2  { margin-left: 0em; }
 .add-entry      { font-size: 0.9em; border-bottom: 1px solid #ccc; }
 .add-entry dl   { font-weight: bold; }
 .Likes	dd      { display: none; }
 .Likes			    { margin: 0.8em 1.2em; margin: 0.8em 1.2em;}
 .metanav        { text-align: right; font-size: 0.8em; padding: 0.3em;
                   margin-bottom: 1em; background: rgb(245,245,245); }
-.flash          { background: #CEE5F5; padding: 0.5em;
-                  border: 1px solid #AACBE2; }
+.flash          { background: rgb(245, 245, 245); padding: 0.5em;
+                  border: 1px solid rgb(230, 230 ,230); }
 .error          { background: #F0D6D6; padding: 0.5em; }
 .hidden			    { display: none; }
 .comment-area-toggle 	{}
-.comment-area			{ display: none; background-color: rgb(250,250,250); border: 1px solid #ccc; }
+.comment-area			{ display: none; background-color: rgb(250,250,250); border: 1px solid #ccc; border-radius: 3px;}
 .comment-box-toggle		{}
 .comment-box			{ }
 .comment-box dd			{ margin-left: -1em; margin: 0.8em 1.2em;}

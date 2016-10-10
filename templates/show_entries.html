@@ -3,6 +3,7 @@
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 
@@ -15,10 +16,10 @@
     <script>
       $(document).ready(function(){
         $(".comment-area-toggle").click(function(){
-          $(this).next('.comment-area').toggle();
+          $(this).next('.comment-area').slideToggle();
         });
-        $(".comment-box-toggle").click(function(){
-          $(this).next(".comment-box").toggle();
+        $(".comment-box").click(function(){
+          $(this).fade();
         });
       });
     </script> 
@@ -34,50 +35,50 @@
   {% endif %}
 
       <ul class="entries">
-      {% for entry in entries %}
-        <li><h2><a style="color: rgb(20, 20, 20); font-family: monospace; font-size: 1.4em" href='/post/{{ entry.id }}'>{{entry.title}}</a></h2>Published On: {{entry.time|safe }}</li>
-        <li style="color: rgb(50,50,50);">{{ entry.text|safe }}</li>
-        <div class="row Likes">
-          <li style="margin: none !important;"> Likes: {{ entry.likes }} 
-            <a style="cursor: pointer" onclick="$(this).closest('form').submit()"><span class="glyphicon glyphicon-thumbs-up"></span></a> 
-            <a style="cursor: pointer" onclick="$(this).closest('form').submit()"><span class="glyphicon glyphicon-thumbs-down"></span></a>
-          </li>
-          <form action="{{ url_for('likes')}}" method="post">
-            <dl>
-              <dd><input type="hidden" name="entryid" value = {{entry.id}}>
-              <dd><input type="hidden" name="likes" value = {{entry.likes}}>
-            </dl>      
-          </form>
-          <form action="{{ url_for('dislikes')}}" method="post">
-            <dl>
-              <dd><input type="hidden" name="entryid" value = {{entry.id}}>
-              <dd><input type="hidden" name="likes" value = {{entry.likes}}>
-            </dl>  
-          </form>
-        </div>
-        <li class="comment-area-toggle" style="cursor: pointer">Comments:</li>
-          <div class="comment-area">
-                <form class="comment-box" action="{{ url_for('add_comment')}}" method="post">
-                  <dl>
-                     <li>
-                      <dd><textarea style="width: 80%; vertical-align: bottom;" name="commenttext" placeholder="Add a comment..." rows="1" cols="40"></textarea>
-                      <button id="comment" class="btn-comment" type="submit">Comment</button>
-                     </li>
-                  <dd><input type="hidden" name="commentid" value = {{entry.id}}>
-                  </dl>
-                </form>
-            {% for comment in commentonentries %}
-              {% if entry.id == comment.comment_id %}
-                <li style="color: rgb(70, 70, 70)">{{ comment.commenttext|safe }}</li>
-              {% endif %}
-            {% endfor %}
-              
+        {% for entry in entries %}
+          <li><h2><a style="color: rgb(20, 20, 20); font-family: monospace; font-size: 1.4em" href='/post/{{ entry.id }}'>{{entry.title}}</a></h2><p style="color: rgb(90, 90, 90)"> Published On: {{entry.time|safe }}</p></li>
+          <li style="color: rgb(50,50,50);">{{ entry.text|safe }}</li>
+          <div class="row Likes">
+            <li style="margin: none !important;"> Likes: {{ entry.likes }} 
+              <a style="cursor: pointer" onclick="$(this).find('form').submit()"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+              <a style="cursor: pointer" onclick="$(this).closest('form').submit()"><span class="glyphicon glyphicon-thumbs-down"></span></a>
+            <form action="{{ url_for('likes')}}" method="post">
+              <dl>
+                <dd><input type="hidden" name="entryid" value = {{entry.id}}>
+                <dd><input type="hidden" name="likes" value = {{entry.likes}}>
+                <dd><input type="submit" name="Like">
+              </dl>      
+            </form>
+            <form action="{{ url_for('dislikes')}}" method="post">
+              <dl>
+                <dd><input type="hidden" name="entryid" value = {{entry.id}}>
+                <dd><input type="hidden" name="likes" value = {{entry.likes}}>
+              </dl>  
+            </form>
+            </li>
           </div>
-          <li style="border-bottom: 1px solid #e0e0e0;"></li>
-        
-      {% else %}
-        <li><em>Unbelievable.  No entries here so far</em></li>
-      {% endfor %}
+          <li class="comment-area-toggle" style="cursor: pointer">Comments:</li>
+            <div class="comment-area">
+                  <form class="comment-box" action="{{ url_for('add_comment')}}" method="post">
+                    <dl>
+                       <li>
+                        <dd><textarea style="width: 80%; vertical-align: bottom;" name="commenttext" placeholder="Add a comment..." rows="1" cols="40"></textarea>
+                        <button id="comment" class="btn-comment" type="submit">Comment</button>
+                       </li>
+                    <dd><input type="hidden" name="commentid" value = {{entry.id}}>
+                    </dl>
+                  </form>
+              {% for comment in commentonentries %}
+                {% if entry.id == comment.comment_id %}
+                  <li style="color: rgb(70, 70, 70)">{{ comment.commenttext|safe }}</li>
+                {% endif %}
+              {% endfor %}
+                
+            </div>
+            <li style="border-bottom: 1px solid #e0e0e0;"></li>      
+        {% else %}
+          <li><em>Unbelievable.  No entries here so far</em></li>
+        {% endfor %}
       </ul>
 </div>
 {% endblock %}
