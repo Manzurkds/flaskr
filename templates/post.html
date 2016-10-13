@@ -19,7 +19,7 @@
       <li><h2><a style="color: rgb(20, 20, 20); font-family: monospace; font-size: 1.4em" href='/post/{{ entry.id }}'>{{entry.title}}</a></h2><p style="color: rgb(90, 90, 90)"> Published On: {{entry.time|safe }}</p></li>
       <li style="color: rgb(50,50,50);">{{ entry.text|safe }}</li>
         
-      <div style="margin-left: 1em !important;"><b>Likes: {{ entry.likes }}</b>
+      <div style="margin-left: 1em !important;">Likes: {{ entry.likes }}
         <a href='/likes/{{entry.id}}/{{entry.likes}}'><span class="glyphicon glyphicon-thumbs-up"></span></a>
         <a href='/dislikes/{{entry.id}}/{{entry.likes}}'><span class="glyphicon glyphicon-thumbs-down"></span></a>
         <b>&nbsp│ </b>
